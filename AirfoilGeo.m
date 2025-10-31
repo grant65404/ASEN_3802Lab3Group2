@@ -1,4 +1,4 @@
-function [x,y_t,y_c,dy_c,xi,x_U,x_L,y_U,y_L,AirfoilName] = AirfoilGeo(c,D1,D2,D3,n)
+function [x,y_t,y_c,dy_c,xi,x_U,x_L,y_U,y_L,AirfoilName] = AirfoilGeo(c,D1,D2,D3,n,plt)
 % Airfoil Name
 D1_str = num2str(D1);
 D2_str = num2str(D2);
@@ -39,16 +39,17 @@ for i = 1:length(x)
     y_L(i) = y_c(i) - y_t(i)*cos(xi(i));
 
 end
-
-figure()
-hold on
-axis equal
-%plot(x,y_t)
-plot(x,y_c)
-plot(x_U,y_U,"k")
-plot(x_L,y_L,"k")
-title(AirfoilName)
-xlabel("Chord Length [m]")
-ylabel("Airfoil Thickness [m]")
-legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
+if plt ~= 0
+    figure()
+    hold on
+    axis equal
+    %plot(x,y_t)
+    plot(x,y_c)
+    plot(x_U,y_U,"k")
+    plot(x_L,y_L,"k")
+    title(AirfoilName)
+    xlabel("Chord Length [m]")
+    ylabel("Airfoil Thickness [m]")
+    legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
+end
 end
