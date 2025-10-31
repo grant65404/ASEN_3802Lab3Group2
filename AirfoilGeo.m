@@ -1,4 +1,4 @@
-function [x,y_t,y_c,dy_c,xi,x_U,x_L,y_U,y_L,AirfoilName] = AirfoilGeo(c,D1,D2,D3)
+function [x,y_t,y_c,dy_c,xi,x_U,x_L,y_U,y_L,AirfoilName] = AirfoilGeo(c,D1,D2,D3,n)
 % Airfoil Name
 D1_str = num2str(D1);
 D2_str = num2str(D2);
@@ -9,7 +9,7 @@ end
 AirfoilName = "NACA " + D1_str + D2_str + D3_str;
 
 % Airfoil Geometry
-x = linspace(0,c,1000);
+x = linspace(0,c,n/2);
 
 t = D3/100;
 m = D1/100;
