@@ -50,4 +50,5 @@ plot(x_L,y_L,"k")
 title(AirfoilName)
 xlabel("Chord Length [m]")
 ylabel("Airfoil Thickness [m]")
+legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
 end
