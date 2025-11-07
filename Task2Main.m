@@ -7,8 +7,7 @@ for i=1:20
     x = unique([x_U,x_L],'stable');
     y = unique([y_U,y_L],'stable');
     cl(i) = Vortex_Panel(x,y,alpha);
-    n(i)=i;
+    n(i)=i*10;
 end
 figure()
-plot(x,y)
 plot(n,cl)
