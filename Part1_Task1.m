@@ -22,6 +22,7 @@ title(Name)
 xlabel("Chord Length [m]")
 ylabel("Airfoil Thickness [m]")
 legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
+print(Name + '_Geo','-r300','-dpng')
 
 % NACA 2418
 c = 1;
@@ -41,6 +42,7 @@ title(Name)
 xlabel("Chord Length [m]")
 ylabel("Airfoil Thickness [m]")
 legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
+print(Name + '_Geo','-r300','-dpng')
 
 clear D1 D2 D3 n x y_t y_c xi XB YB Name
 
