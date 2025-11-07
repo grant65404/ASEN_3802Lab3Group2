@@ -1,4 +1,4 @@
-function [x,y_t,y_c,dy_c,xi,x_U,x_L,y_U,y_L,AirfoilName] = AirfoilGeo(c,D1,D2,D3,n,plt)
+function [x,y_t,y_c,dy_c,xi,XB,YB,AirfoilName] = AirfoilGeo(c,D1,D2,D3,n)
 % Airfoil Name
 D1_str = num2str(D1);
 D2_str = num2str(D2);
@@ -9,7 +9,7 @@ end
 AirfoilName = "NACA " + D1_str + D2_str + D3_str;
 
 % Airfoil Geometry
-x = linspace(0,c,n/2);
+x = linspace(0,c,n);
 
 t = D3/100;
 m = D1/100;
@@ -39,17 +39,28 @@ for i = 1:length(x)
     y_L(i) = y_c(i) - y_t(i)*cos(xi(i));
 
 end
-if plt ~= 0
-    figure()
-    hold on
-    axis equal
-    %plot(x,y_t)
-    plot(x,y_c)
-    plot(x_U,y_U,"k")
-    plot(x_L,y_L,"k")
-    title(AirfoilName)
-    xlabel("Chord Length [m]")
-    ylabel("Airfoil Thickness [m]")
-    legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
+
+for i = 1:((2*length(x))-1)
+    if i <= length(x)
+        XB(i) = x_L(length(x)+1-i);
+        YB(i) = y_L(length(x)+1-i);
+    else
+        XB(i) = x_U(i+1-length(x));
+        YB(i) = y_U(i+1-length(x));
+    end
+
 end
+
+% figure()
+% hold on
+% axis equal
+% %plot(x,y_t)
+% plot(x,y_c)
+% plot(x_U,y_U,"k")
+% plot(x_L,y_L,"k")
+% title(AirfoilName)
+% xlabel("Chord Length [m]")
+% ylabel("Airfoil Thickness [m]")
+% legend("Mean Camber Line","Airfoil Geometry","Location","northeast")
+%yline(0)
 end
