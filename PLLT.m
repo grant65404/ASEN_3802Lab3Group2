@@ -19,14 +19,14 @@ AR = (b^2)/(0.5*b*(c_r+c_t));
 
     x = D/M;
 
-    % for i = 1:N           % didn't work for whatever reason
-    %     A(2*i - 1) = x(i);
-    %     A(2*i) = 0;
-    % end
+    for i = 1:N
+        A(2*i - 1) = x(i);
+        A(2*i) = 0;
+    end
 
     Delta = 0;
-    for n = 2:N
-        Delta = Delta + (2*n - 1)*(x(n)/x(1))^2;
+    for n = 2:(2*N)
+        Delta = Delta + n*(A(n)/A(1))^2;
     end
 
     c_L = x(1)*pi()*AR;
