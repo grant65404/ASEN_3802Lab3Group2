@@ -1,0 +1,62 @@
+clear
+clc
+close all
+
+%% Air Foil Geometry & 2D lift
+c = 1;
+n = 500;
+alpha_a0 = [-5 0 5];
+
+% NACA 0012 (tip)
+D1_t = 0; % Must be 1 digit
+D2_t = 0; % Must be 1 digit
+D3_t = 12; % Must be 1 or 2 digits
+[~,~,~,~,~,XB_t,YB_t,Name_t] = AirfoilGeo(c,D1_t,D2_t,D3_t,n);
+
+% lift slope calculations
+for i = 1:length(alpha_a0)
+    C_l_t(i) = Vortex_Panel(XB_t,YB_t,alpha_a0(i));
+end
+a0_t = (C_l_t(2) - C_l_t(1))/(alpha_a0(2) - alpha_a0(1));   % cross setional lift slope at root per degree
+a0_t = a0_t * (180/pi()); % converts lift slope from per degree to per radian
+% zero lift AoA calculation
+C_l_v_alpha_eq_t = @(a) C_l_t(2) + a0_t*a;
+aero_t = fzero(C_l_v_alpha_eq_t,0); % zero life AoA at tip in degrees
+aero_t = aero_t * (pi()/180);  % zero life AoA at tip in radians
+
+% NACA 2412 (root)
+D1_r = 2; % Must be 1 digit
+D2_r = 4; % Must be 1 digit
+D3_r = 12; % Must be 1 or 2 digits
+[~,~,~,~,~,XB_r,YB_r,Name_r] = AirfoilGeo(c,D1_r,D2_r,D3_r,n);
+
+% lift slope calculations
+for i = 1:length(alpha_a0)
+    C_l_r(i) = Vortex_Panel(XB_r,YB_r,alpha_a0(i));
+end
+a0_r = (C_l_r(2) - C_l_r(1))/(alpha_a0(2) - alpha_a0(1));   % cross setional lift slope at root per degree
+a0_r = a0_r * (180/pi()); % converts lift slope from per degree to per radian
+% zero lift AoA calculation
+C_l_v_alpha_eq_r = @(a) C_l_r(2) + a0_r*a;
+aero_r = fzero(C_l_v_alpha_eq_r,0); % zero life AoA at tip in degrees
+aero_r = aero_r * (pi()/180);  % zero life AoA at tip in radians
+
+%% 3D lift and drag
+alpha = 10; % in degree
+b = 36;  % in feet
+c_r = 5 + (4/12);    % chord at root in feet
+c_t = 3 + (7/12);     % chord at tip in feet
+twist_r = 2 * (pi()/180);   % geometric twist at root in radians
+twist_t = 0;   % geometric twist at tip in radians
+geo_r = alpha * (pi()/180) + twist_r;   % geometric AoA at root in radians
+geo_t = alpha * (pi()/180) + twist_t;   % geometric AoA at tip in radians
+N = 5;
+
+[e,c_L,c_Di] = PLLT(b,a0_t,a0_r,c_t,c_r,aero_t,aero_r,geo_t,geo_r,N);
+
+%% Part 1
+
+
+
+
+
