@@ -38,11 +38,11 @@ a0_r = (C_l_r(2) - C_l_r(1))/(alpha_a0(2) - alpha_a0(1));   % cross setional lif
 a0_r = a0_r * (180/pi()); % converts lift slope from per degree to per radian
 % zero lift AoA calculation
 C_l_v_alpha_eq_r = @(a) C_l_r(2) + a0_r*a;
-aero_r = fzero(C_l_v_alpha_eq_r,0); % zero life AoA at tip in degrees
-aero_r = aero_r * (pi()/180);  % zero life AoA at tip in radians
+aero_r = fzero(C_l_v_alpha_eq_r,0); % zero lift AoA at tip in degrees
+aero_r = aero_r * (pi()/180);  % zero lift AoA at tip in radians
 
 %% 3D lift and drag
-alpha = 10; % in degree
+alpha = linspace(-10,10); % in degree
 b = 36;  % in feet
 c_r = 5 + (4/12);    % chord at root in feet
 c_t = 3 + (7/12);     % chord at tip in feet
@@ -51,12 +51,22 @@ twist_t = 0;   % geometric twist at tip in radians
 geo_r = alpha * (pi()/180) + twist_r;   % geometric AoA at root in radians
 geo_t = alpha * (pi()/180) + twist_t;   % geometric AoA at tip in radians
 N = 5;
+for i=1:length(alpha)
+    [e(i),c_L(i),c_Di(i)] = PLLT(b,a0_t,a0_r,c_t,c_r,aero_t,aero_r,geo_t(i),geo_r(i),N);
+end
+%% Task 1
+figure()
+plot(alpha,c_L,linewidth=1.4)
+xlabel("AoA (deg)")
+ylabel("c_L")
+title("c_L vs \alpha for Cessna 180")
 
-[e,c_L,c_Di] = PLLT(b,a0_t,a0_r,c_t,c_r,aero_t,aero_r,geo_t,geo_r,N);
+%% Task 2
 
-%% Part 1
-
-
-
+cdbycl = load("cdvscl.mat");
+clbyaoa = load("clvsaoa.mat");
+c = linspace(c_r,c_t,10); %chord linearly varying from root to tip
+cd = 
+    
 
 
