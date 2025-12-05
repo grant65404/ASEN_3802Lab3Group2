@@ -66,6 +66,18 @@ title("c_L vs \alpha for Cessna 180")
 cdbycl = load("cdvscl.mat");
 clbyaoa = load("clvsaoa.mat");
 c = linspace(c_r,c_t,10); %chord linearly varying from root to tip
+clpart2 = cdbycl.data(:,1);
+cdpart = cdbycl.data(:,2);
+aoapart = clbyaoa.data(:,1);
+clpart1 = clbyaoa.data(:,2);
+p = polyfit(clpart2,cdpart,2);
+aoalin = linspace(min(aoapart),max(aoapart));
+cllin = interp1(aoapart,clpart1,aoalin,'linear');
+cdbyaoa = polyval(p, cllin);
+% so we done unless we wanna do the bonus and solve for cd across span
+figure()
+title("Estimation of Profile Drag Coeff")
+plot(aoalin,cdbyaoa,linewidth=1.2)
 
     
 

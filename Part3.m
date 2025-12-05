@@ -62,11 +62,32 @@ ylabel("c_L")
 title("c_L vs \alpha for Cessna 180")
 
 %% Task 2
+% % This part is attempting to use the digitizer in the Theory of Wing
+% % Sections thing 
+% cdbycl = load("cdvscl.mat");
+% clbyaoa = load("clvsaoa.mat");
+% c = linspace(c_r,c_t,10); %chord linearly varying from root to tip
+% clpart2 = cdbycl.data(:,1);
+% cdpart = cdbycl.data(:,2);
+% aoapart = clbyaoa.data(:,1);
+% clpart1 = clbyaoa.data(:,2);
+% p = polyfit(clpart2,cdpart,2);
+% aoalin = linspace(min(aoapart),max(aoapart));
+% cllin = interp1(aoapart,clpart1,aoalin,'linear');
+% cdbyaoa = polyval(p, cllin);
+% % so we done unless we wanna do the bonus and solve for cd across span
 
-cdbycl = load("cdvscl.mat");
-clbyaoa = load("clvsaoa.mat");
-c = linspace(c_r,c_t,10); %chord linearly varying from root to tip
-cd = 
+% This section's using the airfoiltools.com data (more complete and fitted)
+airfoiltoolsdata = readmatrix("xf-n0012-il-1000000.csv");
+cd = airfoiltoolsdata(:,3); % this is a valid approximation for part 3 task 2
+aoa = airfoiltoolsdata(:,1);
+figure()
+hold on
+title("Estimation of Profile Drag Coefficient")
+plot(aoa,cd,linewidth=1.2)
+xlabel("AoA (deg)")
+ylabel("C_{D,0}")
+hold off
     
 
 
